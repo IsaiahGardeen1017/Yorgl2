@@ -1,18 +1,14 @@
 import '../App.css';
 import Login from '../login/login';
+import MainLayout from '../mainPage/mainLayout';
 
 function Main() {
-    let yarg = 'GAY'
-  return (
-    <div className="Main">
-      <header className="App-header">
-        <p>
-          Ooh Wah Ooh, { yarg } dis da main
-        </p>
-        <Login/>
-      </header>
-    </div>
-  );
+    let loggedIn = false;
+    if (!loggedIn) {
+        return <Login />
+    } else {
+        return <MainLayout />
+    }
 }
 
 export default Main;

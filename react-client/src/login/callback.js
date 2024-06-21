@@ -9,7 +9,7 @@ function Callback() {
 
     useEffect(() => {
         console.log('Using Effecting Callback');
-        callGenToken(code);
+        let data = callGenToken(code);
     }, []);
     
 
@@ -25,15 +25,16 @@ function Callback() {
     );
 }
 
-function callGenToken(code){
+async function callGenToken(code){
     const urlQs = '?code=' + code;
-    fetch('/auth/gentoken' + urlQs).then((response) => {
+    fetch('/api/auth/gentoken' + urlQs).then((response) => {
         console.log('res');
         console.log(response);
         return response.json()
     }).then((data) => {
-        console.log('dat');
-        console.log(data);
+        if(data.token && data.expires && data.refresh_token){
+            sessionStorage.setItem('authToken', data.token);
+        }
     });
 }
 
