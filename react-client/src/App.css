@@ -1,19 +1,20 @@
-.App {
-  text-align: center;
+html,
+body {
+    height: 100%;
+    margin: 0;
 }
 
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.content {
+    flex: 1;
+}
+
+.footer {
+    background-color: #b7cad1;
+    /* Optional: background color */
 }

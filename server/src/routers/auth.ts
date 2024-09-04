@@ -4,22 +4,24 @@ import { stat } from "fs";
 
 export const AuthRouter = express.Router();
 
-const CLIENT_SECRET = '0657e4bfb075460fb0467fa44d5d14a2';
+const CLIENT_SECRET = '7cd953a4d858413da6daa081afeab325';
 const CLIENT_ID = '58be630dba4c4c788643b5c8f7321a88';
 const REDIRECT_URL = 'http://localhost:1080/callback';
 
 
 AuthRouter.get('/gentoken', async (req: Request, res: Response) => {
-    console.log('gennign token');
+    console.log('gentoken start');
     const code = req.query['code'];
     const state = req.query['state'];
     if (!code) {
         res.status(400).send('code not provided');
+        console.log('gentoken 400 - code');
         return;
     }
-
+    
     if (!state) {
         res.status(400).send('state not provided');
+        console.log('gentoken 400 - state');
         return;
     }
 
@@ -27,6 +29,7 @@ AuthRouter.get('/gentoken', async (req: Request, res: Response) => {
 
     let response = await axios.post('https://accounts.spotify.com/api/token', {
         code: code,
+        state: state,
         redirect_uri: REDIRECT_URL,
         grant_type: 'authorization_code'
     }, {
@@ -38,9 +41,12 @@ AuthRouter.get('/gentoken', async (req: Request, res: Response) => {
     });
     if (response.status !== 200) {
         res.status(401).send('Could not generate access token');
+        console.log('gentoken 401: ' + response.status);
+        console.log('more info: ' + response.data);
         return;
     }
 
+    console.log('gentoken 200');
     res.send({
         token: response.data.access_token,
         refresh: response.data.refresh_token,

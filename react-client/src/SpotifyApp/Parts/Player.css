@@ -1,0 +1,16 @@
+.playerRoot{border-style: solid;}
+
+.albumImage{
+    width: 100px;
+    height: 100px;
+}
+
+
+.playerRoot{
+    display: flex;
+    flex-direction: row;
+}
+
+.playerCol {
+    flex: 1;
+}

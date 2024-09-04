@@ -1,15 +1,14 @@
-import './App.css';
-import Main from './mainPage/main';
 import Callback from './login/callback';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Root from './SpotifyApp/Root';
+import './App.css';
 
-function App() {
+function AppRouter() {
     return (
         <BrowserRouter>
             <div className="App">
-                This is the app div
                 <Routes>
-                    <Route path='/' element={<Main/>}/>
+                    <Route path='/' element={<Root/>}/>
                     <Route path='/callback' element={<Callback/>}/>
                 </Routes>
             </div>
@@ -17,4 +16,4 @@ function App() {
     );
 }
 
-export default App;
+export default AppRouter;
