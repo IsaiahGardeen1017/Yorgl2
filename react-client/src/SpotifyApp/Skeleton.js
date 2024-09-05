@@ -2,11 +2,11 @@ import Player from './Parts/Player';
 
 function Skeleton() {
     return (
-        <div class="container">
-            <div class="content">
+        <div className="container">
+            <div className="content">
                 Some stuff here I suppose
             </div>
-            <div class="footer">
+            <div className="footer">
                 <Player />
             </div>
         </div>

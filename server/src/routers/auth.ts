@@ -1,10 +1,12 @@
 import express, { Express, Request, Response } from "express";
 import axios from "axios";
 import { stat } from "fs";
+import dotenv from "dotenv";
 
 export const AuthRouter = express.Router();
 
-const CLIENT_SECRET = '7cd953a4d858413da6daa081afeab325';
+dotenv.config();
+const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const CLIENT_ID = '58be630dba4c4c788643b5c8f7321a88';
 const REDIRECT_URL = 'http://localhost:1080/callback';
 

@@ -25,6 +25,8 @@ export async function getPlayerMe(authToken: string): Promise<NowPlayingResponse
     let returnResponse: NowPlayingResponse = {
         deviceName: spotifyResponse.device?.name,
         is_playing: spotifyResponse.is_playing,
+        shuffle: spotifyResponse.shuffle_state,
+        repeat: spotifyResponse.repeat_state,
         track: spotifyResponse.item ? {
             album: spotifyResponse.item.album ? {
                 href: spotifyResponse.item.album.href,
