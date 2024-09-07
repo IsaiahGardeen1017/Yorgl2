@@ -38,8 +38,15 @@ async function callApi(uri, params, method) {
 
 export async function getNowPlaying() {
     let response = await callApi('/api/nowPlaying');
-    console.log('responseerd: ');
-    console.log(response);
+    if (response?.status === 200) {
+        return response.data;
+    } else {
+        return undefined;
+    }
+}
+
+export async function setPlaystate() {
+    let response = await callApi('/api/playState');
     if (response?.status === 200) {
         return response.data;
     } else {

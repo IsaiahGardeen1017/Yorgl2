@@ -44,7 +44,6 @@ AuthRouter.get('/gentoken', async (req: Request, res: Response) => {
     if (response.status !== 200) {
         res.status(401).send('Could not generate access token');
         console.log('gentoken 401: ' + response.status);
-        console.log('more info: ' + response.data);
         return;
     }
 
