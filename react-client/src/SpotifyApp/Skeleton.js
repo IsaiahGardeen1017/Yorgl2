@@ -1,10 +1,11 @@
 import Player from './Parts/Player';
+import PlaylistViewer from './Parts/PlaylistViewer';
 
 function Skeleton() {
     return (
         <div className="container">
             <div className="content">
-                Some stuff here I suppose
+                <PlaylistViewer />
             </div>
             <div className="footer">
                 <Player />

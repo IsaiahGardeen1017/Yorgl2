@@ -69,3 +69,12 @@ export async function doPlayStateAction(action) {
         return undefined;
     }
 }
+
+export async function getAllMyPlaylists(){
+    let response = await callApi('/api/myPlaylists');
+    if (response?.status === 200) {
+        return response.data;
+    } else {
+        return undefined;
+    }
+}
