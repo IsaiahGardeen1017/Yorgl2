@@ -16,7 +16,7 @@ export type NowPlayingResponse = {
 export async function handleNowPlaying(router: Router) {
     router.get('/nowPlaying', async (req: Request, res: Response) => {
         const authToken = req.headers.authorization;
-        const built = await getData(authToken);
+        const built = await getNowPlayingData(authToken);
         if (built.status === 200 || built.status === 204) {
             res.send(JSON.stringify(built.data));
         } else {
@@ -32,7 +32,7 @@ export async function handleNowPlaying(router: Router) {
     });
 }
 
-async function getData(authToken: string): Promise<ResponseObj<NowPlayingResponse>> {
+export async function getNowPlayingData(authToken: string): Promise<ResponseObj<NowPlayingResponse>> {
     const response = await callSpotifyApi({
         url: '/v1/me/player',
         urlParams: { market: 'US' },

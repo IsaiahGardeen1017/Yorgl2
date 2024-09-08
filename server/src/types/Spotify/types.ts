@@ -12,7 +12,7 @@ export type SpotifyPlaybackStateResponse = {
     currently_playing_type: string;
     actions: SpotifyActions;
     is_playing: boolean;
-  };
+};
 
 export type SpotifyDevice = {
     id: string;
@@ -23,18 +23,18 @@ export type SpotifyDevice = {
     supports_volume: boolean;
     type: string;
     volume_percent: number;
-  };
-  
+};
+
 export type SpotifyExternalUrls = {
     spotify: string;
-  };
-  
+};
+
 export type SpotifyImage = {
     height: number;
     url: string;
     width: number;
-  };
-  
+};
+
 export type SpotifyAlbum = {
     album_type: string;
     artists: SpotifyArtist[];
@@ -49,8 +49,8 @@ export type SpotifyAlbum = {
     total_tracks: number;
     type: string;
     uri: string;
-  };
-  
+};
+
 export type SpotifyArtist = {
     external_urls: SpotifyExternalUrls;
     href: string;
@@ -58,8 +58,8 @@ export type SpotifyArtist = {
     name: string;
     type: string;
     uri: string;
-  };
-  
+};
+
 export type SpotifyTrack = {
     album: SpotifyAlbum;
     artists: SpotifyArtist[];
@@ -68,7 +68,7 @@ export type SpotifyTrack = {
     duration_ms: number;
     explicit: boolean;
     external_ids: {
-      isrc: string;
+        isrc: string;
     };
     external_urls: SpotifyExternalUrls;
     href: string;
@@ -80,18 +80,63 @@ export type SpotifyTrack = {
     track_number: number;
     type: string;
     uri: string;
-  };
-  
+};
+
 export type SpotifyContext = {
     external_urls: SpotifyExternalUrls;
     href: string;
     type: string;
     uri: string;
-  };
-  
+};
+
 export type SpotifyActions = {
     disallows: {
-      resuming: boolean;
+        resuming: boolean;
     };
-  };
-  
+};
+
+export type SpotifyPlayListBundle = {
+    href: string;
+    limit: number;
+    next: string;
+    offset: number;
+    previous: string;
+    total: number;
+    items: SpotifyPlaylist[];
+};
+
+export type SpotifyPlaylist = {
+    collaborative: boolean;
+    description: string;
+    external_urls: {
+        spotify: string;
+    };
+    href: string;
+    id: string;
+    images: SpotifyImage[];
+    name: string;
+    owner: SpotifyOwner;
+    public: boolean;
+    snapshot_id: string;
+    tracks: {
+        href: string;
+        total: number;
+    };
+    type: string;
+    uri: string;
+};
+
+export type SpotifyOwner = {
+    external_urls: {
+        spotify: string;
+    };
+    followers: {
+        href: string;
+        total: number;
+    };
+    href: string;
+    id: string;
+    type: "user";
+    uri: string;
+    display_name: string;
+};

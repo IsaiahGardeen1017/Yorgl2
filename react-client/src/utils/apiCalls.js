@@ -45,8 +45,24 @@ export async function getNowPlaying() {
     }
 }
 
-export async function setPlaystate() {
-    let response = await callApi('/api/playState');
+const validActions = [
+    'repeat_track',
+    'repeat_off',
+    'repeat_context',
+    'shuffle_on',
+    'shuffle_off',
+    'play',
+    'pause',
+    'skip',
+    'previous'
+]
+export async function doPlayStateAction(action) {
+    action = action.toLowerCase();
+    if(!validActions.includes(action)){
+        console.log('You are calling setPlaystate incorrectly');
+        return undefined;
+    }
+    let response = await callApi('/api/playState/' + action, {}, 'PUT');
     if (response?.status === 200) {
         return response.data;
     } else {

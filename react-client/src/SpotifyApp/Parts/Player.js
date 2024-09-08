@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
-import { getNowPlaying } from "../../utils/apiCalls";
+import { getNowPlaying, doPlayStateAction } from "../../utils/apiCalls";
 import './Player.css';
 
 function Player() {
 
-    const [playerData, setPlayer] = useState(null);
+    const [playerData, setPlayerData] = useState(null);
+    const [playerOptionStates, setPlayerOptionState] = useState({
+        repeat_track: false,
+        repeat_off: false,
+        repeat_context: false,
+        shuffle: false,
+        is_playing: false
+    });
 
     useEffect(() => {
         const getPlayerDataFunc = async () => {
@@ -19,19 +26,79 @@ function Player() {
         return () => clearInterval(interval);
     }, []);
 
-
-    const shuffleOnChange = () => {
-        console.log('clicked shuffle');
+    function setPlayer(data) {
+        let plyrOptsSt = {
+            repeat_track: false,
+            repeat_off: false,
+            repeat_context: false,
+            shuffle: data.shuffle ? data.shuffle : false,
+            is_playing: data.is_playing ? data.is_playing : false
+        };
+        switch (data.repeat) {
+            case 'track':
+                plyrOptsSt['repeat_track'] = true;
+                break;
+            case 'context':
+                plyrOptsSt['repeat_context'] = true;
+                break;
+            case 'off':
+            default:
+                plyrOptsSt['repeat_off'] = true;
+                break;
+        }
+        setPlayerOptionState(plyrOptsSt);
+        setPlayerData(data);
     }
 
-    const repeatOnChange = () => {
-        console.log('clicked repeat');
+    const sendPlaystate = async (action) => {
+        let respData = await doPlayStateAction(action);
+        if (respData) {
+            setPlayer(respData);
+        }
+    }
+    const getOnChangeFunc = (inputField, currentValue) => {
+        switch (inputField) {
+            case 'shuffle':
+                return () => {
+                    sendPlaystate(currentValue ? 'shuffle_off' : 'shuffle_on')
+                    setPlayerOptionState({
+                        ...playerOptionStates,
+                        shuffle: !currentValue
+                    });
+                };
+            case 'is_playing':
+                return () => {
+                    sendPlaystate(currentValue ? 'pause' : 'play')
+                    setPlayerOptionState({
+                        ...playerOptionStates,
+                        is_playing: !currentValue
+                    });
+                };
+            case 'previous':
+            case 'skip':
+                return () => sendPlaystate(inputField);
+            case 'repeat_off':
+            case 'repeat_context':
+            case 'repeat_track':
+                return () => {
+                    sendPlaystate(inputField);
+                    let newPlyOptSts = {
+                        ...playerOptionStates,
+                        repeat_track: false,
+                        repeat_off: false,
+                        repeat_context: false,
+                    };
+                    setPlayerOptionState({
+                        ...newPlyOptSts,
+                        [inputField]: true
+                    })
+                };
+            default:
+                return () => console.log('Not Implemented: ' + inputField);
+        }
     }
 
     let trackName, albumName, artistName, imageSource = '';
-    let playButtonText = 'Play/Pause';
-    let shuffle = false;
-    let repeatMode = playerData
 
     if (playerData && playerData.track) {
 
@@ -40,14 +107,15 @@ function Player() {
         artistName = playerData.track?.artists[0].name;
 
         let possibleImages = playerData.track?.album.images;
+        possibleImages = possibleImages.sort((a, b) => {
+            return a.width - b.width;
+        }).filter((a) => {
+            return a.width >= 300;
+        });
         imageSource = possibleImages[0].url;
-
-        playButtonText = playerData.is_playing ? 'Pause' : 'Play';
-        shuffle = playerData.shuffle;
-        repeatMode = playerData.repeat;
     }
 
-    console.log('repeatemode: ' + repeatMode)
+    let shuffle = playerOptionStates.shuffle;
 
     return (
         <div className="playerRoot">
@@ -69,27 +137,39 @@ function Player() {
                 </div>
             </div>
             <div className="buttons playerCol">
-                <button type="button">&lt;&lt;</button>
-                <button type="button">{playButtonText}</button>
-                <button type="button">&gt;&gt;</button>
+                <button type="button" onClick={getOnChangeFunc('previous')}>
+                    &lt;&lt;
+                </button>
+                <button type="button" onClick={getOnChangeFunc('is_playing', playerOptionStates.is_playing)}>
+                    {playerOptionStates.is_playing ? 'Pause' : 'Play'}
+                </button>
+                <button type="button" onClick={getOnChangeFunc('skip')}>
+                    &gt;&gt;
+                </button>
                 <br />
                 <br />
                 <label>
-                    <input type="checkbox" checked={shuffle ? 'checked' : ''} onChange={shuffleOnChange}/>
+                    <input type="checkbox" checked={shuffle} onChange={getOnChangeFunc('shuffle', shuffle)} />
                     Shuffle
                 </label>
                 <br />
                 <br />
                 <label>
-                    <input type="radio" value="off" name="repeat" checked={repeatMode==='off' ? 'checked' : ''} onChange={repeatOnChange}/> No Repeat
+                    <input type="radio" value="off" name="repeat"
+                        checked={playerOptionStates.repeat_off}
+                        onChange={getOnChangeFunc('repeat_off', playerOptionStates.repeat_off)} /> No Repeat
                 </label>
                 <br />
                 <label>
-                    <input type="radio" value="track" name="repeat" checked={repeatMode==='track' ? 'checked' : ''} onChange={repeatOnChange}/> Single Track
+                    <input type="radio" value="track" name="repeat"
+                        checked={playerOptionStates.repeat_track}
+                        onChange={getOnChangeFunc('repeat_track', playerOptionStates.repeat_track)} /> Single Track
                 </label>
                 <br />
                 <label>
-                    <input type="radio" value="context" name="repeat" checked={repeatMode==='context' ? 'checked' : ''} onChange={repeatOnChange}/> Context
+                    <input type="radio" value="context" name="repeat"
+                        checked={playerOptionStates.repeat_context}
+                        onChange={getOnChangeFunc('repeat_context', playerOptionStates.repeat_context)} /> Context
                 </label>
             </div>
             < br />

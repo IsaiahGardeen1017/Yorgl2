@@ -12,11 +12,14 @@ const port = process.env.BACKEND_PORT;
 app.use('/auth', AuthRouter);
 app.use('/api', SpotifyRouter);
 
-app.get('*', (req, res) => {
-    console.log(req.url);
-    console.log('what?');
-})
 
+const defaultBasicFun = (req, res) => {
+    console.log(req.url);
+    console.log(req.url + ' not handled');
+};
+app.get('*', defaultBasicFun);
+app.put('*', defaultBasicFun);
+app.post('*', defaultBasicFun);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

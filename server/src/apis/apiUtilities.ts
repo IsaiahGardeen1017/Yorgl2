@@ -1,14 +1,17 @@
 import { Request} from "express"
 import axios from "axios";
 
+export type UrlParams = {
+    [key:string]: string
+}
 
-export type RequestObj = {
+export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
+
+export type RequestDetails = {
     url: string,
     authToken: string,
-    urlParams?: {
-        [key:string]: string
-    },
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
+    urlParams?: UrlParams,
+    method?: Method
 }
 
 export type ResponseObj<T = any> = {
@@ -19,7 +22,7 @@ export type ResponseObj<T = any> = {
 
 const SPOTIFY_BASE_URL = 'https://api.spotify.com';
 
-export async function callSpotifyApi(requestDetails: RequestObj): Promise<ResponseObj> {
+export async function callSpotifyApi(requestDetails: RequestDetails): Promise<ResponseObj> {
     let requestOptions = {
         method: requestDetails.method ? requestDetails.method : 'GET',
         url: SPOTIFY_BASE_URL + requestDetails.url,
