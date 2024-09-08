@@ -18,7 +18,7 @@ function PlaylistViewer() {
 
     let stringed = JSON.stringify(playlistData);
     return (
-        <div>
+        <div className="playlistViewer">
             Look at this here {stringed}
         </div>
     )

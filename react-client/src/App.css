@@ -1,20 +1,49 @@
 html,
 body {
-    height: 100%;
+    height: 100vh;
     margin: 0;
 }
 
-.container {
+.main-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-.content {
+
+.middle-section {
+    background-color: #4d447ad1;
+}
+
+.middle-container {
+    display: flex;
+    flex-direction: row;
+    min-width: 100vh;
+}
+
+.middle-col {
     flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .footer {
     background-color: #b7cad1;
     /* Optional: background color */
+    height: 300px;
+}
+
+.header {
+    background-color: #997171;
+    height: 100px;
+}
+
+#col1{
+    background-color: #5d7645d1;
+}
+#col2{
+    background-color: #c2c973d1;
+}
+#col3{
+    background-color: #5fad8dd1;
 }

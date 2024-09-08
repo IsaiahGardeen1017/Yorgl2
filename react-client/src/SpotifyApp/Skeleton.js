@@ -3,13 +3,26 @@ import PlaylistViewer from './Parts/PlaylistViewer';
 
 function Skeleton() {
     return (
-        <div className="container">
-            <div className="content">
-                <PlaylistViewer />
+        <div className="main-container">
+            <header className="header">
+                Welcome to Yorgly.com
+            </header>
+            <div className="middle-section">
+                <div className="middle-container">
+                    <div id="col1" className="middle-col">
+                        <PlaylistViewer />
+                    </div>
+                    <div id="col2" className="middle-col">
+                        Some stuff
+                    </div>
+                    <div id="col3" className="middle-col">
+                        Even More Stuff
+                    </div>
+                </div>
             </div>
-            <div className="footer">
+            <footer className="footer">
                 <Player />
-            </div>
+            </footer>
         </div>
     )
 }
