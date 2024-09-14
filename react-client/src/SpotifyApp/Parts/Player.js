@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getNowPlaying, doPlayStateAction } from "../../utils/apiCalls";
 import './Player.css';
+import {getImageSrcFromImages} from "../../utils/utilFuncs"
 
 function Player() {
 
@@ -107,23 +108,19 @@ function Player() {
         artistName = playerData.track?.artists[0].name;
 
         let possibleImages = playerData.track?.album.images;
-        possibleImages = possibleImages.sort((a, b) => {
-            return a.width - b.width;
-        }).filter((a) => {
-            return a.width >= 300;
-        });
-        imageSource = possibleImages[0].url;
+        imageSource = getImageSrcFromImages(possibleImages, 300);
+        
     }
 
     let shuffle = playerOptionStates.shuffle;
 
     return (
         <div className="playerRoot">
-            <div className="songInfo playerCol">
+            <div className="imageHolder playerCol">
                 <img src={imageSource} alt={albumName} className="albumImage" />
             </div>
 
-            <div className="songInfo playerCol">
+            <div className="playerCol">
                 <div className="trackName">
                     {trackName}
                 </div>

@@ -1,0 +1,32 @@
+.plCard {
+    background-color: #edf3e5;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+.plCard-col {
+    flex: 1;
+}
+
+.spotify-style{
+    background-color: #2eb739;
+}
+
+.me-style{
+    background-color: #fff6ca;
+}
+
+.other-style{
+    background-color: #8a8a8a;
+}
+
+.playlistImage{
+        width: 50px;
+        height: auto;
+}
+

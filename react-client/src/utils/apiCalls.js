@@ -34,7 +34,14 @@ async function callApi(uri, params, method) {
 }
 
 
-
+export async function getUserInfo(callback){
+    let response = await callApi('/api/userInfo');
+    if(response.status === 200){
+        callback(response.data);
+    }else{
+        callback(undefined);
+    }
+}
 
 export async function getNowPlaying() {
     let response = await callApi('/api/nowPlaying');

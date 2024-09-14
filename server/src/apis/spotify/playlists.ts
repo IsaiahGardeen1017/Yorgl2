@@ -82,8 +82,8 @@ async function getSubsetOfPlayLists(authToken, offset, limit){
     });
     return {
         status: response.status,
-        PlayLists: response.data.items,
-        total: response.data.total,
+        PlayLists: response.data?.items,
+        total: response.data?.total,
         errMessage: response.errMessage
     }
 }

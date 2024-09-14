@@ -140,3 +140,25 @@ export type SpotifyOwner = {
     uri: string;
     display_name: string;
 };
+
+
+export type SpotifyUserProfile = {
+    country: string;
+    display_name: string;
+    email: string;
+    explicit_content: {
+        filter_enabled: boolean,
+        filter_locked: boolean
+    };
+    external_urls: SpotifyExternalUrls;
+    followers: {
+        href: string;
+        total: number;
+    };
+    href: string;
+    id: string;
+    images: SpotifyImage[];
+    product: string;
+    type: string;
+    uri: string;
+}
