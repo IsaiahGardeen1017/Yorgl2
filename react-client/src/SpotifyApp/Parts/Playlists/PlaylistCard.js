@@ -14,14 +14,25 @@ function getOwnerType(id, currentUserID) {
     }
 }
 
-
 export function PlaylistCard(props) {
+
+    const [selected, setSelected] = useState(false);
+
     const data = props.data;
     const userData = props.userData;
+    const updateSelectedStatus = props.updateSelectedStatus;
+    const canAdd = props.canAdd;
+    const onAddFunction = () => {
+        props.onAdd(data.id);
+    }
 
-    const playlistName = data.name;
-    const owner = data.ownerName;
-    const length = data.length;
+    const onChecked = () => {
+        updateSelectedStatus(data.id, !selected);
+        setSelected(!selected);
+    }
+
+
+
     const ownerType = getOwnerType(data.ownerId, userData.userId);
     const rmBtnText = ownerType === 'me' ? 'Delete' : 'Unfollow';
     const ownerClass = ownerType + '-style';
@@ -34,15 +45,20 @@ export function PlaylistCard(props) {
                 <img src={imageSource} className="playlistImage" />
             </div>
             <div className="plCard-col">
-                {playlistName}: {length}
-                <br/>
-                {owner}
+                {data.name}|{data.id}: {data.length}
+                <br />
+                {data.ownerName}
             </div>
             <div className="plCard-col">
-                <button disabled="true">{rmBtnText}</button>
-                <button disabled="true">Add</button>
+                <button disabled={true}>{rmBtnText}</button>
+                <button disabled={!canAdd} onClick={onAddFunction}>Add</button>
             </div>
             <div className="plCard-col">
+            <label>
+                    <input type="checkbox" checked={selected} onChange={onChecked}/>
+                    Select
+                </label>
+
             </div>
 
 
