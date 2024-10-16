@@ -23,6 +23,7 @@ export function PlaylistCard(props) {
     const updateSelectedStatus = props.updateSelectedStatus;
     const canAdd = props.canAdd;
     const onAddFunction = () => {
+        console.log('on-add')
         props.onAdd(data.id);
     }
 

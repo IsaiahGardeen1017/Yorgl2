@@ -1,8 +1,8 @@
-import { Request} from "express"
+import { Request } from "express"
 import axios from "axios";
 
 export type UrlParams = {
-    [key:string]: string
+    [key: string]: string
 }
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
@@ -11,7 +11,8 @@ export type RequestDetails = {
     url: string,
     authToken: string,
     urlParams?: UrlParams,
-    method?: Method
+    method?: Method,
+    body?: Object
 }
 
 export type ResponseObj<T = any> = {
@@ -27,7 +28,11 @@ export async function callSpotifyApi(requestDetails: RequestDetails): Promise<Re
         method: requestDetails.method ? requestDetails.method : 'GET',
         url: SPOTIFY_BASE_URL + requestDetails.url,
         params: requestDetails.urlParams,
-        headers: { 'Authorization': 'Bearer ' + requestDetails.authToken },
+        headers: {
+            'Authorization': 'Bearer ' + requestDetails.authToken,
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(requestDetails.body),
     }
     try {
         let response = await axios(requestOptions);
@@ -36,8 +41,11 @@ export async function callSpotifyApi(requestDetails: RequestDetails): Promise<Re
             data: response.data
         };
     } catch (err: any) {
+        console.log('----------ERROR-------------------------');
+        console.log(requestOptions);
+        console.log(err.response);
         return {
-            status: err.response.status,
+            status: err.response?.status ? err.response.status : 500,
             errMessage: err.message
         };
     }

@@ -7,7 +7,9 @@ function Login() {
         'user-read-private',
         'user-read-playback-state',
         'user-modify-playback-state',
-        'playlist-read-private'
+        'playlist-read-private',
+        'playlist-modify-private',
+        'playlist-modify-public'
     ];
     const redirect = 'http://localhost:1080/callback';
 

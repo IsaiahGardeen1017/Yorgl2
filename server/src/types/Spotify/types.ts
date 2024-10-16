@@ -162,3 +162,21 @@ export type SpotifyUserProfile = {
     type: string;
     uri: string;
 }
+
+
+export type SpotifyTrackBundle = {
+    href: string;
+    limit: number;
+    next: string;
+    offset: number;
+    previous: string;
+    total: number;
+    items: SpotifyTrackBundleItem[];
+};
+
+export type SpotifyTrackBundleItem = {
+    added_at: string;
+    added_by: string;
+    is_local: string;
+    track: SpotifyTrack;
+};

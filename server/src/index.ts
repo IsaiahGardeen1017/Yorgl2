@@ -14,7 +14,6 @@ app.use('/api', SpotifyRouter);
 
 
 const defaultBasicFun = (req, res) => {
-    console.log(req.url);
     console.log(req.url + ' not handled');
 };
 app.get('*', defaultBasicFun);

@@ -32,10 +32,10 @@ function Player() {
             repeat_track: false,
             repeat_off: false,
             repeat_context: false,
-            shuffle: data.shuffle ? data.shuffle : false,
-            is_playing: data.is_playing ? data.is_playing : false
+            shuffle: data?.shuffle ? data.shuffle : false,
+            is_playing: data?.is_playing ? data.is_playing : false
         };
-        switch (data.repeat) {
+        switch (data?.repeat) {
             case 'track':
                 plyrOptsSt['repeat_track'] = true;
                 break;

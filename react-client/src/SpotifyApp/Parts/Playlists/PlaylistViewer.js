@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllMyPlaylists } from "../../../utils/apiCalls";
+import { getAllMyPlaylists, addSongsToPlaylist } from "../../../utils/apiCalls";
 import { PlaylistCard } from "./PlaylistCard"
 
 function PlaylistViewer(props) {
@@ -37,9 +37,8 @@ function PlaylistViewer(props) {
         console.log(selectedPlaylistIds);
     }
 
-    const onAdd = (playlistID) => {
-        console.log(playlistID);
-        console.log(selectedPlaylistIds);
+    const onAdd = async (playlistID) => {
+        await addSongsToPlaylist(selectedPlaylistIds, playlistID)
     }
 
 

@@ -4,17 +4,24 @@
  * @returns Obj with 2 fields: status (integer) and response (object if success or string with error message)
  * 
  * @param {string} uri Ex: '/api/nowPlaying
- * @param {*} params, object with key value pairs
+ * @param {*} queryParams, object with key value pairs
  */
-async function callApi(uri, params, method) {
+async function callApi(uri, queryParams, method) {
     let auth_token = sessionStorage.getItem('auth-token');
 
-    const urlQs = '';
+    let queryString = '';
+    for (const query in queryParams) {
+        if (queryString === '') {
+            queryString += '?' + query + '=' + queryParams[query];
+        } else {
+            queryString += '&' + query + '=' + queryParams[query];
+        }
+    }
 
     const headers = {
         authorization: auth_token
     }
-    const response = await fetch(uri + urlQs, {
+    const response = await fetch(uri + queryString, {
         method: method ? method : 'GET',
         headers: headers
     });
@@ -26,19 +33,27 @@ async function callApi(uri, params, method) {
             response: response.body
         }
     }
-    const data = await response.json();
-    return {
-        status: 200,
-        data: data
-    };
+    const text = await response.text();
+    try {
+        const data = JSON.parse(text);
+        return {
+            status: 200,
+            data: data
+        };
+    } catch (err) {
+        return {
+            status: 200,
+            data: text
+        };
+    }
 }
 
 
-export async function getUserInfo(callback){
+export async function getUserInfo(callback) {
     let response = await callApi('/api/userInfo');
-    if(response.status === 200){
+    if (response.status === 200) {
         callback(response.data);
-    }else{
+    } else {
         callback(undefined);
     }
 }
@@ -65,7 +80,7 @@ const validActions = [
 ]
 export async function doPlayStateAction(action) {
     action = action.toLowerCase();
-    if(!validActions.includes(action)){
+    if (!validActions.includes(action)) {
         console.log('You are calling setPlaystate incorrectly');
         return undefined;
     }
@@ -77,8 +92,21 @@ export async function doPlayStateAction(action) {
     }
 }
 
-export async function getAllMyPlaylists(){
+export async function getAllMyPlaylists() {
     let response = await callApi('/api/myPlaylists');
+    if (response?.status === 200) {
+        return response.data;
+    } else {
+        return undefined;
+    }
+}
+
+export async function addSongsToPlaylist(sourceIds, playlistId) {
+    let srcQueryParamStr = sourceIds.join('|');
+    let response = callApi('api/addSongs/' + playlistId, {
+        sources: srcQueryParamStr
+    }, 'PUT');
+
     if (response?.status === 200) {
         return response.data;
     } else {
