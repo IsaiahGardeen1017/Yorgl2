@@ -1,4 +1,4 @@
-import Player from './Parts/Player';
+import Player from './Parts/Player/Player';
 import PlaylistViewer from './Parts/Playlists/PlaylistViewer';
 import Header from './Parts/Header';
 import { useEffect, useState } from "react";

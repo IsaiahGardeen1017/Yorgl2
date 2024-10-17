@@ -1,4 +1,5 @@
 .filter-header {
     background-color: #74f9e9;
     padding: 5px;
+    position: fixed;
 }

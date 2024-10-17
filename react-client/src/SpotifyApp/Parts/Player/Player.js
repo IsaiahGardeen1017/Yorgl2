@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getNowPlaying, doPlayStateAction } from "../../utils/apiCalls";
+import { getNowPlaying, doPlayStateAction } from "../../../utils/apiCalls";
 import './Player.css';
-import {getImageSrcFromImages} from "../../utils/utilFuncs"
+import {getImageSrcFromImages} from "../../../utils/utilFuncs"
 
 function Player() {
 

@@ -54,6 +54,8 @@ function PlaylistViewer(props) {
     return (
         <div>
             <div class="filter-header">Show: </div>
+            <div class="scroller-col">
+
             {
                 playlistList.map(playlist => <PlaylistCard userData={props.userData}
                     data={playlist}
@@ -62,7 +64,8 @@ function PlaylistViewer(props) {
                     onFocus={onFocus}
                     canAdd={canAdd}
                     focus={playlist.id === focus ? true : false}></PlaylistCard>)
-            }
+                }
+                </div>
         </div>
     )
 }
