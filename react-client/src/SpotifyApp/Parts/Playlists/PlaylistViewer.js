@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAllMyPlaylists, addSongsToPlaylist } from "../../../utils/apiCalls";
 import { PlaylistCard } from "./PlaylistCard"
+import './PlaylistViewer.css';
 
 function PlaylistViewer(props) {
     const [playlistData, setPlaylistData] = useState(null);
     const [canAdd, setCanAdd] = useState(false);
+    const [focus, setFocus] = useState(null); //ID of playlist being focused
     const [selectedPlaylistIds, setNever] = useState([]);
 
     useEffect(() => {
@@ -41,17 +43,25 @@ function PlaylistViewer(props) {
         await addSongsToPlaylist(selectedPlaylistIds, playlistID)
     }
 
+    const onFocus = async (playlistID) => {
+        if(playlistID){
+            setFocus(playlistID);
+        } 
+    }
+
 
     let playlistList = playlistData ? playlistData.playlists : [];
-    let stringed = JSON.stringify(playlistData);
     return (
-        <div className="playlist-viewer">
+        <div>
+            <div class="filter-header">Show: </div>
             {
                 playlistList.map(playlist => <PlaylistCard userData={props.userData}
                     data={playlist}
                     updateSelectedStatus={updateSelectedStatus}
                     onAdd={onAdd}
-                    canAdd={canAdd}></PlaylistCard>)
+                    onFocus={onFocus}
+                    canAdd={canAdd}
+                    focus={playlist.id === focus ? true : false}></PlaylistCard>)
             }
         </div>
     )

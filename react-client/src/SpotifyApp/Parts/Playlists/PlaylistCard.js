@@ -22,9 +22,14 @@ export function PlaylistCard(props) {
     const userData = props.userData;
     const updateSelectedStatus = props.updateSelectedStatus;
     const canAdd = props.canAdd;
+    const focus = props.focus;
     const onAddFunction = () => {
         console.log('on-add')
         props.onAdd(data.id);
+    }
+
+    const onCardFocused = () => {
+        props.onFocus(data.id);
     }
 
     const onChecked = () => {
@@ -36,17 +41,20 @@ export function PlaylistCard(props) {
 
     const ownerType = getOwnerType(data.ownerId, userData.userId);
     const rmBtnText = ownerType === 'me' ? 'Delete' : 'Unfollow';
-    const ownerClass = ownerType + '-style';
+    let ownerClassList = ownerType + '-style';
+    if(focus){
+        ownerClassList += ' focused';
+    }
     const imageSource = getImageSrcFromImages(data.images, 65);
 
 
     return (
-        <div className={'plCard ' + ownerClass}>
+        <div className={'plCard ' + ownerClassList} onClick={onCardFocused}>
             <div className="plCard-col">
                 <img src={imageSource} className="playlistImage" />
             </div>
             <div className="plCard-col">
-                {data.name}|{data.id}: {data.length}
+                {data.name}: {data.length}
                 <br />
                 {data.ownerName}
             </div>

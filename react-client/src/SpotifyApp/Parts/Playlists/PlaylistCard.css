@@ -30,3 +30,7 @@
         height: auto;
 }
 
+.focused{
+    border-color: aqua;
+    border-style: solid;
+}
