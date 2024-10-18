@@ -7,23 +7,16 @@ body {
 .main-container {
     height: 100vh;
     display: grid;
-    grid-template-rows: 50px 1fr 300px;
+    grid-template-rows: 50px 1fr 310px;
 }
 
 
 .middle-section {
-    background-color: #4d447ad1;
     overflow-y: hidden;
     
     display: flex;
     flex-direction: row;
     min-width: 100vh;
-}
-
-.middle-col {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .footer {
@@ -34,9 +27,7 @@ body {
     background-color: #997171;
 }
 
-#col1{
-    background-color: #5d7645d1;
-}
+
 #col2{
     background-color: #c2c973d1;
 }

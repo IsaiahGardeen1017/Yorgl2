@@ -18,18 +18,17 @@ function Skeleton() {
     return (
         <div className="main-container">
             <header className="header">
-                <Header userData={userData}/>
+                <Header userData={userData} />
             </header>
             <div className="middle-section">
-                    <div id="col1" className="middle-col">
-                        <PlaylistViewer userData={userData}/>
-                    </div>
-                    <div id="col2" className="middle-col">
-                        Some stuff
-                    </div>
-                    <div id="col3" className="middle-col">
-                        Even More Stuff
-                    </div>
+
+                <PlaylistViewer userData={userData} />
+                <div id="col2" className="middle-col">
+                    Some stuff
+                </div>
+                <div id="col3" className="middle-col">
+                    Even More Stuff
+                </div>
             </div>
             <footer className="footer">
                 <Player />

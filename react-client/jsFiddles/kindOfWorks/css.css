@@ -1,0 +1,72 @@
+html,
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+.main-grid {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 50px 1fr 150px;
+}
+
+.main-section {
+  overflow-y: hidden;
+
+  display: flex;
+  flex-direction: row;
+  min-width: 100vh;
+}
+
+.column {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sub-header {
+  background-color: #74f9e9;
+  padding: 5px;
+  position: fixed;
+  width: inherit;
+}
+
+.column-3 {
+  flex: 1;
+  position: relative;
+  width: 100%;
+}
+
+.sub-header-3 {
+  background-color: #74f9e9;
+  padding: 5px;
+  width: inherit;
+}
+
+
+.plCard {
+  background-color: #edf3e5;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+}
+
+#col1 {
+  background-color: #5d7645d1;
+}
+#col2 {
+  background-color: #c2c973d1;
+}
+#col3 {
+  background-color: #5fad8dd1;
+}
+
+.footer {
+  background-color: #b7cad1;
+}
+
+.header {
+  background-color: #997171;
+}

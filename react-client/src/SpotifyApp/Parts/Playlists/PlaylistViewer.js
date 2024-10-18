@@ -44,28 +44,27 @@ function PlaylistViewer(props) {
     }
 
     const onFocus = async (playlistID) => {
-        if(playlistID){
+        if (playlistID) {
             setFocus(playlistID);
-        } 
+        }
     }
 
 
     let playlistList = playlistData ? playlistData.playlists : [];
     return (
-        <div>
-            <div class="filter-header">Show: </div>
-            <div class="scroller-col">
-
-            {
-                playlistList.map(playlist => <PlaylistCard userData={props.userData}
-                    data={playlist}
-                    updateSelectedStatus={updateSelectedStatus}
-                    onAdd={onAdd}
-                    onFocus={onFocus}
-                    canAdd={canAdd}
-                    focus={playlist.id === focus ? true : false}></PlaylistCard>)
+        <div id="col1" className="middle-col">
+            <div class="filter-header col-scrollbox">Show: </div>
+            <div>
+                {
+                    playlistList.map(playlist => <PlaylistCard userData={props.userData}
+                        data={playlist}
+                        updateSelectedStatus={updateSelectedStatus}
+                        onAdd={onAdd}
+                        onFocus={onFocus}
+                        canAdd={canAdd}
+                        focus={playlist.id === focus ? true : false}></PlaylistCard>)
                 }
-                </div>
+            </div>
         </div>
     )
 }
