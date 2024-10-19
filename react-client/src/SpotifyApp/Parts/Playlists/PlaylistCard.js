@@ -4,7 +4,7 @@ import './PlaylistCard.css';
 import { getImageSrcFromImages } from "../../../utils/utilFuncs";
 
 
-function getOwnerType(id, currentUserID) {
+export function getOwnerType(id, currentUserID) {
     if (id === 'spotify') {
         return 'spotify';
     } else if (id === currentUserID) {

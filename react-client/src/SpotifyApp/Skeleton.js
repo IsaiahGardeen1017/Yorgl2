@@ -16,21 +16,19 @@ function Skeleton() {
 
 
     return (
-        <div className="main-container">
-            <header className="header">
+        <div className="main-grid">
+            <header className="grid-header">
                 <Header userData={userData} />
             </header>
-            <div className="middle-section">
 
-                <PlaylistViewer userData={userData} />
-                <div id="col2" className="middle-col">
-                    Some stuff
-                </div>
-                <div id="col3" className="middle-col">
-                    Even More Stuff
-                </div>
+            <PlaylistViewer userData={userData} />
+            <div className="column grid-col2">
+                Some stuff
             </div>
-            <footer className="footer">
+            <div className="column grid-col3">
+                Some stuff
+            </div>
+            <footer className="grid-footer">
                 <Player />
             </footer>
         </div>

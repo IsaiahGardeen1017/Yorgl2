@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { getAllMyPlaylists, addSongsToPlaylist } from "../../../utils/apiCalls";
 import { PlaylistCard } from "./PlaylistCard"
 import './PlaylistViewer.css';
+import { getOwnerType } from "./PlaylistCard";
 
 function PlaylistViewer(props) {
     const [playlistData, setPlaylistData] = useState(null);
     const [canAdd, setCanAdd] = useState(false);
     const [focus, setFocus] = useState(null); //ID of playlist being focused
     const [selectedPlaylistIds, setNever] = useState([]);
+    const [showSpotify, setShowSpotify] = useState(false);
+    const [showMine, setShowMine] = useState(false);
+    const [showOther, setShowOther] = useState(false);
 
     useEffect(() => {
         const getData = async () => {
@@ -49,14 +53,67 @@ function PlaylistViewer(props) {
         }
     }
 
+    const getOnCheckboxFunc = (checkboxKey) => {
+        return (val) => {
+            const isChecked = val.target.checked;
+            switch(checkboxKey){
+                case 'spotify':
+                    setShowSpotify(isChecked);
+                    break;
+                case 'me':
+                    setShowMine(isChecked);
+                    break;
+                case 'other':
+                    setShowOther(isChecked);
+                    break;
+            }
+        }
+    }
+
+
 
     let playlistList = playlistData ? playlistData.playlists : [];
+    let filteredPlaylist = [];
+    if(showOther | showMine | showSpotify){
+        const userId = props.userData.userId;
+        for(let i = 0; i < playlistList.length; i++){
+            let owner = getOwnerType(playlistList[i].ownerId, userId);
+            if(owner === 'spotify' && showSpotify){
+                filteredPlaylist.push(playlistList[i]);
+            }
+            if(owner === 'other' && showOther){
+                filteredPlaylist.push(playlistList[i]);
+            }
+            if(owner === 'me' && showMine){
+                filteredPlaylist.push(playlistList[i]);
+            }
+        }
+    }else{
+        filteredPlaylist = playlistList;
+    }
+
+    console.log('Final Length: ' + filteredPlaylist.length);
+
     return (
-        <div id="col1" className="middle-col">
-            <div class="filter-header col-scrollbox">Show: </div>
-            <div>
+        <div className="column grid-col1">
+            <div className="sub-header">
+                Select:
+                <label>
+                    <input type="checkbox" onChange={getOnCheckboxFunc("me")} />
+                    Mine
+                </label>
+                <label>
+                    <input type="checkbox" onChange={getOnCheckboxFunc("spotify")} />
+                    Spotify
+                </label>
+                <label>
+                    <input type="checkbox" onChange={getOnCheckboxFunc("other")} />
+                    Other
+                </label>
+            </div>
+            <div className="scrollbox">
                 {
-                    playlistList.map(playlist => <PlaylistCard userData={props.userData}
+                    filteredPlaylist.map(playlist => <PlaylistCard userData={props.userData}
                         data={playlist}
                         updateSelectedStatus={updateSelectedStatus}
                         onAdd={onAdd}

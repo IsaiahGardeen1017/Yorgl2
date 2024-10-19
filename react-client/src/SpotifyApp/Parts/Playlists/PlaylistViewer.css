@@ -1,26 +1,15 @@
-.filter-header {
+.column {
+    display: grid;
+    grid-template-areas: "sh" "sc";
+    
+  }
+  
+  .sub-header {
+    grid-area: sh;
     background-color: #74f9e9;
-    padding: 5px;
-    position: fixed;
-    width: inherit;
-}
-
-#col1{
-    background-color: #5d7645d1;
-}
-
-.middle-col {
-    flex: 1;
-    position: relative;
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.col-scrollbox{
-
-}
-
-.plCard-col {
-    flex: 1;
-}
+  }
+  
+  .scrollbox {
+    overflow-y: scroll;
+    grid-area: sc;
+  }
