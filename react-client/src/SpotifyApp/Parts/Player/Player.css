@@ -1,14 +1,22 @@
-.playerRoot{border-style: solid;}
-
 .imageHolder{
     height: inherit;
 }
 
 .playerRoot{
+    border-style: solid;
+    height: 300px;
     display: flex;
     flex-direction: row;
 }
 
 .playerCol {
     flex: 1;
+}
+
+.albumPopUp{
+    height: 100vh;
+    width: 100vh;
+    position: fixed;
+    left: 0px;
+    top: 0px;
 }

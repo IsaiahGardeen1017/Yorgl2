@@ -13,6 +13,7 @@ function Player() {
         shuffle: false,
         is_playing: false
     });
+    const [isPoppedUp, setIsPoppedUp] = useState(false);
 
     useEffect(() => {
         const getPlayerDataFunc = async () => {
@@ -99,7 +100,16 @@ function Player() {
         }
     }
 
-    let trackName, albumName, artistName, imageSource = '';
+    const popUpFunc= () => {
+        if(isPoppedUp){
+            setIsPoppedUp(false);
+        }else{
+            setIsPoppedUp(true);
+        }
+    }
+    
+
+    let trackName, albumName, artistName, imageSource, bigImageSource = '';
 
     if (playerData && playerData.track) {
 
@@ -109,6 +119,7 @@ function Player() {
 
         let possibleImages = playerData.track?.album.images;
         imageSource = getImageSrcFromImages(possibleImages, 300);
+        bigImageSource = getImageSrcFromImages(possibleImages, 100000);
         
     }
 
@@ -117,7 +128,7 @@ function Player() {
     return (
         <div className="playerRoot">
             <div className="imageHolder playerCol">
-                <img src={imageSource} alt={albumName} className="albumImage" />
+                <img src={isPoppedUp ? bigImageSource : imageSource} alt={albumName} className={isPoppedUp ? "albumPopUp" : "albumImage"} onClick={popUpFunc}/>
             </div>
 
             <div className="playerCol">

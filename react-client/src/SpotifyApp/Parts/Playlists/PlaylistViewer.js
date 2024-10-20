@@ -8,18 +8,23 @@ function PlaylistViewer(props) {
     const [playlistData, setPlaylistData] = useState(null);
     const [canAdd, setCanAdd] = useState(false);
     const [focus, setFocus] = useState(null); //ID of playlist being focused
-    const [selectedPlaylistIds, setNever] = useState([]);
+    const [selectedPlaylistIds, setSelected] = useState([]);
     const [showSpotify, setShowSpotify] = useState(false);
     const [showMine, setShowMine] = useState(false);
     const [showOther, setShowOther] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const getData = async () => {
-            let data = await getAllMyPlaylists();
-            setPlaylistData(data);
-        };
-        getData();
+        refreshPlaylists();
     }, []);
+
+    const refreshPlaylists = async () => {
+        setLoading(true);
+        let data = await getAllMyPlaylists();
+        setLoading(false);
+        console.log('can we get ehre?');
+        setPlaylistData(data);
+    }
 
     const updateSelectedStatus = (playlistID, isSelected) => {
         if (isSelected) {
@@ -40,11 +45,13 @@ function PlaylistViewer(props) {
                 setCanAdd(false);
             }
         }
+        setSelected(selectedPlaylistIds.slice());
         console.log(selectedPlaylistIds);
     }
 
     const onAdd = async (playlistID) => {
         await addSongsToPlaylist(selectedPlaylistIds, playlistID)
+        refreshPlaylists();
     }
 
     const onFocus = async (playlistID) => {
@@ -56,7 +63,7 @@ function PlaylistViewer(props) {
     const getOnCheckboxFunc = (checkboxKey) => {
         return (val) => {
             const isChecked = val.target.checked;
-            switch(checkboxKey){
+            switch (checkboxKey) {
                 case 'spotify':
                     setShowSpotify(isChecked);
                     break;
@@ -70,25 +77,31 @@ function PlaylistViewer(props) {
         }
     }
 
-
+    const getLoader = () => {
+        if(loading){
+            return (
+                <span className="pl-loader">loading...</span>
+            )
+        }
+    }
 
     let playlistList = playlistData ? playlistData.playlists : [];
     let filteredPlaylist = [];
-    if(showOther | showMine | showSpotify){
+    if (showOther | showMine | showSpotify) {
         const userId = props.userData.userId;
-        for(let i = 0; i < playlistList.length; i++){
+        for (let i = 0; i < playlistList.length; i++) {
             let owner = getOwnerType(playlistList[i].ownerId, userId);
-            if(owner === 'spotify' && showSpotify){
+            if (owner === 'spotify' && showSpotify) {
                 filteredPlaylist.push(playlistList[i]);
             }
-            if(owner === 'other' && showOther){
+            if (owner === 'other' && showOther) {
                 filteredPlaylist.push(playlistList[i]);
             }
-            if(owner === 'me' && showMine){
+            if (owner === 'me' && showMine) {
                 filteredPlaylist.push(playlistList[i]);
             }
         }
-    }else{
+    } else {
         filteredPlaylist = playlistList;
     }
 
@@ -110,6 +123,8 @@ function PlaylistViewer(props) {
                     <input type="checkbox" onChange={getOnCheckboxFunc("other")} />
                     Other
                 </label>
+                <button type="button" onClick={refreshPlaylists}>Refresh</button>
+                {getLoader()}
             </div>
             <div className="scrollbox">
                 {
@@ -119,6 +134,7 @@ function PlaylistViewer(props) {
                         onAdd={onAdd}
                         onFocus={onFocus}
                         canAdd={canAdd}
+                        selected={selectedPlaylistIds.includes(playlist.id) ? true : false}
                         focus={playlist.id === focus ? true : false}></PlaylistCard>)
                 }
             </div>

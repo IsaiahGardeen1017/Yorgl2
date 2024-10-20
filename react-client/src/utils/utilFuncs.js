@@ -1,4 +1,4 @@
-export function getImageSrcFromImages(images, minSize){
+export function getImageSrcFromImages(images, maxSize){
     if(!images){
         return '';
     }
@@ -9,7 +9,7 @@ export function getImageSrcFromImages(images, minSize){
     let currSize = 0;
     for(const image of images){
         const size = image.width;
-        if(size <= minSize){
+        if(size <= maxSize){
             if(size > currSize){
                 currSize = size;
                 url = image.url;

@@ -16,13 +16,12 @@ export function getOwnerType(id, currentUserID) {
 
 export function PlaylistCard(props) {
 
-    const [selected, setSelected] = useState(false);
-
     const data = props.data;
     const userData = props.userData;
     const updateSelectedStatus = props.updateSelectedStatus;
     const canAdd = props.canAdd;
     const focus = props.focus;
+    const selected = props.selected;
     const onAddFunction = () => {
         console.log('on-add')
         props.onAdd(data.id);
@@ -34,7 +33,6 @@ export function PlaylistCard(props) {
 
     const onChecked = () => {
         updateSelectedStatus(data.id, !selected);
-        setSelected(!selected);
     }
 
 
