@@ -42,6 +42,7 @@ export async function callSpotifyApi(requestDetails: RequestDetails): Promise<Re
         };
     } catch (err: any) {
         console.log('----------ERROR-------------------------');
+        console.log(requestDetails.url);
         console.log(err.message);
         return {
             status: err.response?.status ? err.response.status : 500,

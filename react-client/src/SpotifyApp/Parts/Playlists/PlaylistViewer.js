@@ -7,7 +7,6 @@ import { getOwnerType } from "./PlaylistCard";
 function PlaylistViewer(props) {
     const [playlistData, setPlaylistData] = useState(null);
     const [canAdd, setCanAdd] = useState(false);
-    const [focus, setFocus] = useState(null); //ID of playlist being focused
     const [selectedPlaylistIds, setSelected] = useState([]);
     const [showSpotify, setShowSpotify] = useState(false);
     const [showMine, setShowMine] = useState(false);
@@ -78,12 +77,15 @@ function PlaylistViewer(props) {
     }
 
     const getLoader = () => {
-        if(loading){
+        if (loading) {
             return (
                 <span className="pl-loader">loading...</span>
             )
         }
     }
+
+    let setFocus = props.setFocus;
+    let focus = props.focus;
 
     let playlistList = playlistData ? playlistData.playlists : [];
     let filteredPlaylist = [];
@@ -105,7 +107,8 @@ function PlaylistViewer(props) {
         filteredPlaylist = playlistList;
     }
 
-    console.log('Final Length: ' + filteredPlaylist.length);
+    const numSelected = selectedPlaylistIds.length;
+
 
     return (
         <div className="column grid-col1">
@@ -124,6 +127,9 @@ function PlaylistViewer(props) {
                     Other
                 </label>
                 <button type="button" onClick={refreshPlaylists}>Refresh</button>
+                <label>
+                    {numSelected} seleced
+                </label>
                 {getLoader()}
             </div>
             <div className="scrollbox">

@@ -101,6 +101,15 @@ export async function getAllMyPlaylists() {
     }
 }
 
+export async function getFocusPlaylistData(plId) {
+    let response = await callApi('/api/playlist/' + plId);
+    if (response?.status === 200) {
+        return response.data;
+    } else {
+        return undefined;
+    }
+}
+
 export async function addSongsToPlaylist(sourceIds, playlistId) {
     let srcQueryParamStr = sourceIds.join('|');
     let response = callApi('api/addSongs/' + playlistId, {

@@ -2,30 +2,12 @@ import { Router, Request, Response } from "express";
 import { callSpotifyApi, ResponseObj } from "../apiUtilities";
 import { SpotifyPlaylist } from "../../types/Spotify/types";
 import { off } from "process";
+import { Playlist, PlaylistBundle } from "../../types/data/Playlist";
+import { getAllPlaylistData } from "./utils/SpotifyDataManager";
 
 
-export type Playlist = {
-    name: string;
-    description: string;
-    id: string;
-    public: boolean;
-    ownerId: string;
-    ownerName: string;
-    images: {
-        url: string;
-        width: number;
-        height: number;
-    }[];
-    etag: string;
-    length: number;
-    type: string;
-}
 
-export type PlaylistBundle = {
-    playlists: Playlist[],
-    total: number
-}
-
+// /myPlaylists
 export async function handleMyPlaylists(router: Router) {
     router.get('/myPlaylists', async (req: Request, res: Response) => {
         const authToken = req.headers.authorization;
@@ -41,7 +23,28 @@ export async function handleMyPlaylists(router: Router) {
                 default:
                     res.status(500).send('Apologies, the developer is stupid');
             }
-        }       
+        }
+    });
+}
+
+// /playlist
+export async function handleSinglePlaylist(router: Router) {
+    router.get('/playlist/:playlistId', async (req: Request, res: Response) => {
+        const playlistId = req.params.playlistId;
+        const authToken = req.headers.authorization;
+        const built = await getAllPlaylistData(authToken, playlistId);
+        if (built.status === 200 || built.status === 204) {
+            res.send(JSON.stringify(built.data));
+        } else {
+            switch (built.status) {
+                case 401:
+                case 403:
+                    res.status(built.status).send(built.errMessage);
+                    break;
+                default:
+                    res.status(500).send('Apologies, the developer is stupid');
+            }
+        }
     });
 }
     

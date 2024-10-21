@@ -1,7 +1,7 @@
 import express, {Express, Request, Response} from "express";
 import { handleNowPlaying } from "../apis/spotify/nowPlaying";
 import { handleSetPlayState } from "../apis/spotify/playState";
-import { handleMyPlaylists } from "../apis/spotify/getPlaylist";
+import { handleMyPlaylists, handleSinglePlaylist } from "../apis/spotify/getPlaylist";
 import { handleCurrentUserInfo } from "../apis/spotify/currentUserInfo";
 import { handleAddSongs } from "../apis/spotify/addSongsToPlaylist";
 
@@ -12,3 +12,4 @@ handleSetPlayState(SpotifyRouter);
 handleMyPlaylists(SpotifyRouter);
 handleCurrentUserInfo(SpotifyRouter);
 handleAddSongs(SpotifyRouter);
+handleSinglePlaylist(SpotifyRouter);

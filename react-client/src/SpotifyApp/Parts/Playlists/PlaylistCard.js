@@ -38,7 +38,6 @@ export function PlaylistCard(props) {
 
 
     const ownerType = getOwnerType(data.ownerId, userData.userId);
-    const rmBtnText = ownerType === 'me' ? 'Delete' : 'Unfollow';
     let ownerClassList = ownerType + '-style';
     if(focus){
         ownerClassList += ' focused';
@@ -57,7 +56,6 @@ export function PlaylistCard(props) {
                 {data.ownerName}
             </div>
             <div className="plCard-col">
-                <button disabled={true}>{rmBtnText}</button>
                 <button disabled={!canAdd} onClick={onAddFunction}>Add</button>
             </div>
             <div className="plCard-col">

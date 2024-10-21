@@ -1,8 +1,4 @@
 import { Router, Request, Response } from "express";
-import { callSpotifyApi, ResponseObj } from "../apiUtilities";
-import { SpotifyPlaylist } from "../../types/Spotify/types";
-import { off } from "process";
-import { Playlist } from "./getPlaylist";
 import { addSongsToPlaylist, getSongsOfaPlaylist } from "./utils/SpotifyDataManager";
 
 function parseSongQueryParam(param): string[] {
