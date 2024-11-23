@@ -121,10 +121,19 @@ export type SpotifyPlaylist = {
     tracks: {
         href: string;
         total: number;
+        items?: SpotifyPlaylistTrack[]
     };
     type: string;
     uri: string;
 };
+
+export type SpotifyPlaylistTrack = {
+    added_at: string;
+    added_by: SpotifyOwner;
+    is_local: boolean;
+    track: SpotifyTrack;
+
+}
 
 export type SpotifyOwner = {
     external_urls: {
@@ -136,8 +145,7 @@ export type SpotifyOwner = {
     };
     href: string;
     id: string;
-    type: "user";
-    uri: string;
+    type: string;
     display_name: string;
 };
 

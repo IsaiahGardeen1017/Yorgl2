@@ -18,3 +18,12 @@
 .pl-loader {
     float: right;
 }
+
+.focusPlaylistImage{
+    height: 200px;
+    width: 200px;
+}
+
+.focusHeader{
+    height: 250px;
+}

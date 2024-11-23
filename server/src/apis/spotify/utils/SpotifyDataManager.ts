@@ -1,8 +1,9 @@
 import { off } from "process";
-import { SpotifyPlaylist, SpotifyTrack, SpotifyTrackBundle, SpotifyTrackBundleItem } from "../../../types/Spotify/types";
+import { SpotifyPlaylist, SpotifyPlaylistTrack, SpotifyTrack, SpotifyTrackBundle, SpotifyTrackBundleItem } from "../../../types/Spotify/types";
 import { callSpotifyApi, ResponseObj } from "../../apiUtilities";
 import { METHODS } from "http";
 import { FullPlaylist } from "../../../types/data/Playlist";
+import { Track } from "../../../types/data/Track";
 
 
 /**
@@ -143,8 +144,29 @@ export async function getAllPlaylistData(authToken: string, playlistId: string):
         }
     }
 
+    
     let plData: SpotifyPlaylist = resp.data as SpotifyPlaylist;
-
+    console.log(plData);
+    let Tracks: Track[] = plData.tracks.items.map((item: SpotifyPlaylistTrack):Track => {
+        return {
+            name: item.track.name,
+            album?: {
+                href: string;
+                id: string;
+                images: {
+                    url: string;
+                    width: number;
+                    height: number;
+                }[];
+                name: string;
+                releaseDate: string;
+            };
+            artists?: Artist[];
+            id?: string;
+            href?: string;
+        }
+    });
+    
     let retplaylist: FullPlaylist = {
         playlist: {
             name: plData.name,

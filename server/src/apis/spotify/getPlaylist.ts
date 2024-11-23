@@ -32,14 +32,14 @@ export async function handleSinglePlaylist(router: Router) {
     router.get('/playlist/:playlistId', async (req: Request, res: Response) => {
         const playlistId = req.params.playlistId;
         const authToken = req.headers.authorization;
-        const built = await getAllPlaylistData(authToken, playlistId);
-        if (built.status === 200 || built.status === 204) {
-            res.send(JSON.stringify(built.data));
+        const builtResponse = await getAllPlaylistData(authToken, playlistId);
+        if (builtResponse.status === 200 || builtResponse.status === 204) {
+            res.send(JSON.stringify(builtResponse.data));
         } else {
-            switch (built.status) {
+            switch (builtResponse.status) {
                 case 401:
                 case 403:
-                    res.status(built.status).send(built.errMessage);
+                    res.status(builtResponse.status).send(builtResponse.errMessage);
                     break;
                 default:
                     res.status(500).send('Apologies, the developer is stupid');
